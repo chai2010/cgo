@@ -10,10 +10,15 @@ package cgo
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 */
 import "C"
-import "unsafe"
+
+import (
+	"fmt"
+	"unsafe"
+)
 
 type (
 	CChar   C.char
@@ -35,6 +40,8 @@ type (
 
 	CIntPtr  C.intptr_t
 	CUIntPtr C.uintptr_t
+
+	CFILE C.FILE
 )
 
 var CEmptyString = CString("")
@@ -112,12 +119,25 @@ func CStrFree(p *CChar) {
 	C.free(unsafe.Pointer(p))
 }
 
+func CSprintf(format string, args ...interface{}) *CChar {
+	s := fmt.Sprintf(format, args...)
+	return CString(s)
+}
+
+func CPuts(s *CChar) int {
+	return int(C.puts((*C.char)(s)))
+}
+
 func (s *CChar) IsEmpty() bool {
 	return s == nil || *s == 0
 }
 
 func (s *CChar) Strdup() *CChar {
 	return CStrdup(s)
+}
+
+func (s *CChar) String() string {
+	return GoString(s)
 }
 
 func (s *CChar) Free() {
