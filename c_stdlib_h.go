@@ -23,6 +23,6 @@ func Realloc(p UnsafePointer, newSize int) UnsafePointer {
 	return UnsafePointer(C.realloc(unsafe.Pointer(p), C.size_t(newSize)))
 }
 
-func Free(p UnsafePointer) {
+func (p UnsafePointer) Free() {
 	C.free(unsafe.Pointer(p))
 }

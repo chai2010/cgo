@@ -54,15 +54,3 @@ func Rename(oldname, newname *CChar) int {
 func Tmpfile() *CFile {
 	return (*CFile)(C.tmpfile())
 }
-
-func Fclose(p *CFile) int {
-	return int(C.fclose((*C.FILE)(p)))
-}
-
-func Fflush(p *CFile) int {
-	return int(C.fflush((*C.FILE)(p)))
-}
-
-func Puts(s *CChar) int {
-	return int(C.puts((*C.char)(s)))
-}
