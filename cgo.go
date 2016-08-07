@@ -7,6 +7,7 @@ package cgo
 /*
 #cgo CXXFLAGS: -std=c++11
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,6 +22,7 @@ import (
 )
 
 type (
+	CBool   C.bool
 	CChar   C.char
 	CInt    C.int
 	CUint   C.uint
@@ -132,7 +134,11 @@ func (s *CChar) IsEmpty() bool {
 	return s == nil || *s == 0
 }
 
-func (s *CChar) Strdup() *CChar {
+func (s *CChar) Len() int {
+	return int(C.strlen((*C.char)(s)))
+}
+
+func (s *CChar) Dup() *CChar {
 	return CStrdup(s)
 }
 
