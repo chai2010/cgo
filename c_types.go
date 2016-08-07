@@ -86,6 +86,6 @@ func (s *CUint64) GoSliceNoCopy(n int) []uint64 {
 	return ((*[1 << 28]uint64)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (s UnsafePointer) GoSliceNoCopy(n int) []byte {
+func (s UnsafePointer) GoBytesNoCopy(n int) []byte {
 	return ((*[1 << 31]byte)(unsafe.Pointer(s)))[0:n:n]
 }
