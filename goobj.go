@@ -8,23 +8,23 @@ import (
 	"sync"
 )
 
-type GoObjectId int32
+type ObjectId int32
 
 var refs struct {
 	sync.Mutex
-	objs map[GoObjectId]interface{}
-	next GoObjectId
+	objs map[ObjectId]interface{}
+	next ObjectId
 }
 
 func init() {
 	refs.Lock()
 	defer refs.Unlock()
 
-	refs.objs = make(map[GoObjectId]interface{})
+	refs.objs = make(map[ObjectId]interface{})
 	refs.next = 1000
 }
 
-func NewGoObjectId(obj interface{}) GoObjectId {
+func NewObjectId(obj interface{}) ObjectId {
 	refs.Lock()
 	defer refs.Unlock()
 
@@ -35,18 +35,18 @@ func NewGoObjectId(obj interface{}) GoObjectId {
 	return id
 }
 
-func (id GoObjectId) IsNil() bool {
+func (id ObjectId) IsNil() bool {
 	return id == 0
 }
 
-func (id GoObjectId) Get() interface{} {
+func (id ObjectId) Get() interface{} {
 	refs.Lock()
 	defer refs.Unlock()
 
 	return refs.objs[id]
 }
 
-func (id GoObjectId) Free() interface{} {
+func (id ObjectId) Free() interface{} {
 	refs.Lock()
 	defer refs.Unlock()
 
