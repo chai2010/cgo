@@ -72,8 +72,20 @@ func GoBytes(s unsafe.Pointer, n int) []byte {
 	return C.GoBytes(s, C.int(n))
 }
 
+func GoBytesNoCopy(s unsafe.Pointer, n int) []byte {
+	return ((*[1 << 30]byte)(unsafe.Pointer(s)))[0:n:n]
+}
+
 func CMalloc(n int) unsafe.Pointer {
 	return C.malloc(C.size_t(n))
+}
+
+func CCalloc(num, size int) unsafe.Pointer {
+	return C.calloc(C.size_t(num), C.size_t(size))
+}
+
+func CRealloc(p unsafe.Pointer, newSize int) unsafe.Pointer {
+	return C.realloc(p, C.size_t(newSize))
 }
 
 func CFree(p unsafe.Pointer) {
