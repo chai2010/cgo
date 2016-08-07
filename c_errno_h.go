@@ -1,0 +1,24 @@
+// Copyright 2016 <chaishushan{AT}gmail.com>. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
+package cgo
+
+/*
+#include <errno.h>
+
+static int cgo_get_errno() {
+	return errno;
+}
+static void cgo_set_errno(int value) {
+	errno = value;
+}
+*/
+import "C"
+
+func CErrno() int {
+	return int(C.cgo_get_errno())
+}
+func CErrnoSet(v int) {
+	C.cgo_set_errno(C.int(v))
+}
