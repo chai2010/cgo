@@ -54,5 +54,33 @@ func GoBytes(s unsafe.Pointer, n int) []byte {
 }
 
 func GoBytesNoCopy(s unsafe.Pointer, n int) []byte {
-	return ((*[1 << 30]byte)(unsafe.Pointer(s)))[0:n:n]
+	return ((*[1 << 31]byte)(unsafe.Pointer(s)))[0:n:n]
+}
+
+func GoInt8NoCopy(s *CInt8, n int) []int8 {
+	return ((*[1 << 31]int8)(unsafe.Pointer(s)))[0:n:n]
+}
+func GoUint8NoCopy(s *CUint8, n int) []uint8 {
+	return ((*[1 << 31]uint8)(unsafe.Pointer(s)))[0:n:n]
+}
+
+func GoInt16NoCopy(s *CInt16, n int) []int16 {
+	return ((*[1 << 30]int16)(unsafe.Pointer(s)))[0:n:n]
+}
+func GoUint16NoCopy(s *CUint16, n int) []uint16 {
+	return ((*[1 << 30]uint16)(unsafe.Pointer(s)))[0:n:n]
+}
+
+func GoInt32NoCopy(s *CInt32, n int) []int32 {
+	return ((*[1 << 29]int32)(unsafe.Pointer(s)))[0:n:n]
+}
+func GoUint32NoCopy(s *CUint32, n int) []uint32 {
+	return ((*[1 << 29]uint32)(unsafe.Pointer(s)))[0:n:n]
+}
+
+func GoInt64NoCopy(s *CInt64, n int) []int64 {
+	return ((*[1 << 28]int64)(unsafe.Pointer(s)))[0:n:n]
+}
+func GoUint64NoCopy(s *CUint64, n int) []uint64 {
+	return ((*[1 << 28]uint64)(unsafe.Pointer(s)))[0:n:n]
 }
