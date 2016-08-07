@@ -17,36 +17,8 @@ package cgo
 import "C"
 
 import (
-	"fmt"
 	"unsafe"
 )
-
-type (
-	CBool   C.bool
-	CChar   C.char
-	CInt    C.int
-	CUint   C.uint
-	CFloat  C.float
-	CDouble C.double
-	CSizeT  C.size_t
-
-	CUint8  C.uint8_t
-	CUint16 C.uint16_t
-	CUint32 C.uint32_t
-	CUint64 C.uint64_t
-
-	CInt8  C.int8_t
-	CInt16 C.int16_t
-	CInt32 C.int32_t
-	CInt64 C.int64_t
-
-	CIntPtr  C.intptr_t
-	CUIntPtr C.uintptr_t
-
-	CFILE C.FILE
-)
-
-var CEmptyString = CString("")
 
 // Go string to C string
 // The C string is allocated in the C heap using malloc.
@@ -83,69 +55,4 @@ func GoBytes(s unsafe.Pointer, n int) []byte {
 
 func GoBytesNoCopy(s unsafe.Pointer, n int) []byte {
 	return ((*[1 << 30]byte)(unsafe.Pointer(s)))[0:n:n]
-}
-
-func CMalloc(n int) unsafe.Pointer {
-	return C.malloc(C.size_t(n))
-}
-
-func CCalloc(num, size int) unsafe.Pointer {
-	return C.calloc(C.size_t(num), C.size_t(size))
-}
-
-func CRealloc(p unsafe.Pointer, newSize int) unsafe.Pointer {
-	return C.realloc(p, C.size_t(newSize))
-}
-
-func CFree(p unsafe.Pointer) {
-	C.free(p)
-}
-
-func CStrdup(s *CChar) *CChar {
-	if s == nil {
-		s = CEmptyString
-	}
-
-	d := (*CChar)(C.malloc(C.strlen((*C.char)(s)) + 1))
-	if d == nil {
-		return nil
-	}
-	C.strcpy((*C.char)(d), (*C.char)(s))
-	return d
-}
-
-func CStrFree(p *CChar) {
-	if p == nil || p == CEmptyString {
-		return
-	}
-	C.free(unsafe.Pointer(p))
-}
-
-func CSprintf(format string, args ...interface{}) *CChar {
-	s := fmt.Sprintf(format, args...)
-	return CString(s)
-}
-
-func CPuts(s *CChar) int {
-	return int(C.puts((*C.char)(s)))
-}
-
-func (s *CChar) IsEmpty() bool {
-	return s == nil || *s == 0
-}
-
-func (s *CChar) Len() int {
-	return int(C.strlen((*C.char)(s)))
-}
-
-func (s *CChar) Dup() *CChar {
-	return CStrdup(s)
-}
-
-func (s *CChar) String() string {
-	return GoString(s)
-}
-
-func (s *CChar) Free() {
-	CStrFree(s)
 }

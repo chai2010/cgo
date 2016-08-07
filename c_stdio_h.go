@@ -4,4 +4,13 @@
 
 package cgo
 
+//#include <stdio.h>
+import "C"
+
+type CFILE C.FILE
+
+func CPuts(s *CChar) int {
+	return int(C.puts((*C.char)(s)))
+}
+
 // TODO: support <stdio.h>
