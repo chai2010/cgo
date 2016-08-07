@@ -7,6 +7,7 @@ package cgo
 //#include <stdbool.h>
 //#include <stdint.h>
 import "C"
+import "unsafe"
 
 type (
 	CBool   C.bool
@@ -28,4 +29,6 @@ type (
 	CUint32  C.uint32_t
 	CUint64  C.uint64_t
 	CUIntPtr C.uintptr_t
+
+	UnsafePointer unsafe.Pointer
 )
