@@ -52,7 +52,7 @@ func (s *CChar) Dup() *CChar {
 	return CStrdup(s)
 }
 
-func (s *CChar) String() string {
+func (s *CChar) GoString() string {
 	return C.GoString((*C.char)(s))
 }
 
