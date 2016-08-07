@@ -32,9 +32,12 @@ type (
 	CInt16 C.int16_t
 	CInt32 C.int32_t
 	CInt64 C.int64_t
+
+	CIntPtr  C.intptr_t
+	CUIntPtr C.uintptr_t
 )
 
-var CEmptyString = C.CString("")
+var CEmptyString = CString("")
 
 // Go string to C string
 // The C string is allocated in the C heap using malloc.
@@ -77,21 +80,21 @@ func CFree(p unsafe.Pointer) {
 	C.free(p)
 }
 
-func CStrdup(s *C.char) *C.char {
+func CStrdup(s *CChar) *CChar {
 	if s == nil {
 		s = CEmptyString
 	}
 
-	d := (*C.char)(C.malloc(C.strlen(s) + 1))
+	d := (*CChar)(C.malloc(C.strlen((*C.char)(s)) + 1))
 	if d == nil {
 		return nil
 	}
-	C.strcpy(d, s)
+	C.strcpy((*C.char)(d), (*C.char)(s))
 	return d
 }
 
 func CStrFree(p *CChar) {
-	if (*C.char)(p) == CEmptyString {
+	if p == nil || p == CEmptyString {
 		return
 	}
 	C.free(unsafe.Pointer(p))
