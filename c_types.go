@@ -6,6 +6,7 @@ package cgo
 
 //#include <stdbool.h>
 //#include <stdint.h>
+//#include <stdlib.h>
 import "C"
 import "unsafe"
 
@@ -33,59 +34,72 @@ type (
 	UnsafePointer uintptr
 )
 
-func (s *CBool) GoSliceNoCopy(n int) []CBool {
+func NewBool() *CBool {
+	panic("TODO")
+}
+func NewBoolN(n int) *CBool {
+	panic("TODO")
+}
+func NewBoolWith(args ...bool) *CBool {
+	panic("TODO")
+}
+func (s *CBool) Slice(n int) []CBool {
 	return ((*[1 << 31]CBool)(unsafe.Pointer(s)))[0:n:n]
 }
-func (s *CChar) GoSliceNoCopy(n int) []byte {
+func (p *CBool) Free() {
+	C.free(unsafe.Pointer(p))
+}
+
+func (s *CChar) Slice(n int) []byte {
 	return ((*[1 << 31]byte)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (s *CInt) GoSliceNoCopy(n int) []CInt {
+func (s *CInt) Slice(n int) []CInt {
 	return ((*[1 << 29]CInt)(unsafe.Pointer(s)))[0:n:n]
 }
-func (s *CUint) GoSliceNoCopy(n int) []CUint {
+func (s *CUint) Slice(n int) []CUint {
 	return ((*[1 << 29]CUint)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (s *CFloat) GoSliceNoCopy(n int) []float32 {
+func (s *CFloat) Slice(n int) []float32 {
 	return ((*[1 << 29]float32)(unsafe.Pointer(s)))[0:n:n]
 }
-func (s *CDouble) GoSliceNoCopy(n int) []float64 {
+func (s *CDouble) Slice(n int) []float64 {
 	return ((*[1 << 28]float64)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (s *CSizeT) GoSliceNoCopy(n int) []CSizeT {
+func (s *CSizeT) Slice(n int) []CSizeT {
 	return ((*[1 << 28]CSizeT)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (s *CInt8) GoSliceNoCopy(n int) []int8 {
+func (s *CInt8) Slice(n int) []int8 {
 	return ((*[1 << 31]int8)(unsafe.Pointer(s)))[0:n:n]
 }
-func (s *CUint8) GoSliceNoCopy(n int) []uint8 {
+func (s *CUint8) Slice(n int) []uint8 {
 	return ((*[1 << 31]uint8)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (s *CInt16) GoSliceNoCopy(n int) []int16 {
+func (s *CInt16) Slice(n int) []int16 {
 	return ((*[1 << 30]int16)(unsafe.Pointer(s)))[0:n:n]
 }
-func (s *CUint16) GoSliceNoCopy(n int) []uint16 {
+func (s *CUint16) Slice(n int) []uint16 {
 	return ((*[1 << 30]uint16)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (s *CInt32) GoSliceNoCopy(n int) []int32 {
+func (s *CInt32) Slice(n int) []int32 {
 	return ((*[1 << 29]int32)(unsafe.Pointer(s)))[0:n:n]
 }
-func (s *CUint32) GoSliceNoCopy(n int) []uint32 {
+func (s *CUint32) Slice(n int) []uint32 {
 	return ((*[1 << 29]uint32)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (s *CInt64) GoSliceNoCopy(n int) []int64 {
+func (s *CInt64) Slice(n int) []int64 {
 	return ((*[1 << 28]int64)(unsafe.Pointer(s)))[0:n:n]
 }
-func (s *CUint64) GoSliceNoCopy(n int) []uint64 {
+func (s *CUint64) Slice(n int) []uint64 {
 	return ((*[1 << 28]uint64)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (s UnsafePointer) GoBytesNoCopy(n int) []byte {
+func (s UnsafePointer) Slice(n int) []byte {
 	return ((*[1 << 31]byte)(unsafe.Pointer(s)))[0:n:n]
 }
