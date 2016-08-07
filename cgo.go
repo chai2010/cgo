@@ -111,3 +111,15 @@ func CStrFree(p *CChar) {
 	}
 	C.free(unsafe.Pointer(p))
 }
+
+func (s *CChar) IsEmpty() bool {
+	return s == nil || *s == 0
+}
+
+func (s *CChar) Strdup() *CChar {
+	return CStrdup(s)
+}
+
+func (s *CChar) Free() {
+	CStrFree(s)
+}
