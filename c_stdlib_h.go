@@ -11,18 +11,18 @@ import (
 	"unsafe"
 )
 
-func CMalloc(n int) unsafe.Pointer {
+func Malloc(n int) unsafe.Pointer {
 	return C.malloc(C.size_t(n))
 }
 
-func CCalloc(num, size int) unsafe.Pointer {
+func Calloc(num, size int) unsafe.Pointer {
 	return C.calloc(C.size_t(num), C.size_t(size))
 }
 
-func CRealloc(p unsafe.Pointer, newSize int) unsafe.Pointer {
+func Realloc(p unsafe.Pointer, newSize int) unsafe.Pointer {
 	return C.realloc(p, C.size_t(newSize))
 }
 
-func CFree(p unsafe.Pointer) {
+func Free(p unsafe.Pointer) {
 	C.free(p)
 }

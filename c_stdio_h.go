@@ -7,29 +7,29 @@ package cgo
 //#include <stdio.h>
 import "C"
 
-type CFile C.FILE
+type File C.FILE
 
-func CRemove(filename *CChar) int {
+func Remove(filename *CChar) int {
 	return int(C.remove((*C.char)(filename)))
 }
 
-func CRename(oldname, newname *CChar) int {
+func Rename(oldname, newname *CChar) int {
 	return int(C.rename((*C.char)(oldname), (*C.char)(newname)))
 }
 
-func CTmpfile() *CFile {
-	return (*CFile)(C.tmpfile())
+func Tmpfile() *File {
+	return (*File)(C.tmpfile())
 }
 
-func CFopen(filename, mode *CChar) *CFile {
-	return (*CFile)(C.fopen((*C.char)(filename), (*C.char)(mode)))
+func Fopen(filename, mode *CChar) *File {
+	return (*File)(C.fopen((*C.char)(filename), (*C.char)(mode)))
 }
 
-func CFclose(p *CFile) int {
+func Fclose(p *File) int {
 	return int(C.fclose((*C.FILE)(p)))
 }
 
-func CFflush(p *CFile) int {
+func Fflush(p *File) int {
 	return int(C.fflush((*C.FILE)(p)))
 }
 

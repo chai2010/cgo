@@ -16,9 +16,9 @@ static void cgo_set_errno(int value) {
 */
 import "C"
 
-func CErrno() int {
+func Errno() int {
 	return int(C.cgo_get_errno())
 }
-func CErrnoSet(v int) {
+func ErrnoSet(v int) {
 	C.cgo_set_errno(C.int(v))
 }

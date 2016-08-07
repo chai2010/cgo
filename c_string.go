@@ -13,29 +13,9 @@ import (
 	"unsafe"
 )
 
-var CEmptyString = CString("")
+var _EmptyString = CString("")
 
-func CStrdup(s *CChar) *CChar {
-	if s == nil {
-		s = CEmptyString
-	}
-
-	d := (*CChar)(C.malloc(C.strlen((*C.char)(s)) + 1))
-	if d == nil {
-		return nil
-	}
-	C.strcpy((*C.char)(d), (*C.char)(s))
-	return d
-}
-
-func CStrFree(p *CChar) {
-	if p == nil || p == CEmptyString {
-		return
-	}
-	C.free(unsafe.Pointer(p))
-}
-
-func CSprintf(format string, args ...interface{}) *CChar {
+func Sprintf(format string, args ...interface{}) *CChar {
 	s := fmt.Sprintf(format, args...)
 	return CString(s)
 }
@@ -49,7 +29,16 @@ func (s *CChar) Len() int {
 }
 
 func (s *CChar) Dup() *CChar {
-	return CStrdup(s)
+	if s == nil {
+		s = _EmptyString
+	}
+
+	d := (*CChar)(C.malloc(C.strlen((*C.char)(s)) + 1))
+	if d == nil {
+		return nil
+	}
+	C.strcpy((*C.char)(d), (*C.char)(s))
+	return d
 }
 
 func (s *CChar) GoString() string {
@@ -57,7 +46,7 @@ func (s *CChar) GoString() string {
 }
 
 func (s *CChar) Free() {
-	if s == nil || s == CEmptyString {
+	if s == nil || s == _EmptyString {
 		return
 	}
 	C.free(unsafe.Pointer(s))
