@@ -46,11 +46,13 @@ func (id ObjectId) Get() interface{} {
 	return refs.objs[id]
 }
 
-func (id ObjectId) Free() interface{} {
+func (id *ObjectId) Free() interface{} {
 	refs.Lock()
 	defer refs.Unlock()
 
-	obj := refs.objs[id]
-	delete(refs.objs, id)
+	obj := refs.objs[*id]
+	delete(refs.objs, *id)
+	*id = 0
+
 	return obj
 }
