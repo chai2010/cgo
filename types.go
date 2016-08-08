@@ -10,24 +10,24 @@ import "C"
 import "unsafe"
 
 type (
-	Char    C.char
-	CInt    C.int
-	CUint   C.uint
-	CFloat  C.float
-	CDouble C.double
-	CSizeT  C.size_t
+	Char   C.char
+	Int    C.int
+	UInt   C.uint
+	Float  C.float
+	Double C.double
+	SizeT  C.size_t
 
-	CInt8   C.int8_t
-	CInt16  C.int16_t
-	CInt32  C.int32_t
-	CInt64  C.int64_t
-	CIntPtr C.intptr_t
+	Int8   C.int8_t
+	Int16  C.int16_t
+	Int32  C.int32_t
+	Int64  C.int64_t
+	IntPtr C.intptr_t
 
-	CUint8   C.uint8_t
-	CUint16  C.uint16_t
-	CUint32  C.uint32_t
-	CUint64  C.uint64_t
-	CUIntPtr C.uintptr_t
+	UInt8   C.uint8_t
+	UInt16  C.uint16_t
+	UInt32  C.uint32_t
+	UInt64  C.uint64_t
+	UIntPtr C.uintptr_t
 
 	UnsafePointer uintptr
 )
@@ -54,67 +54,67 @@ func (s *Char) Free() {
 	C.free(unsafe.Pointer(s))
 }
 
-func NewInt(firstValue int, moreValues ...int) *CInt {
+func NewInt(firstValue int, moreValues ...int) *Int {
 	n := len(moreValues) + 1
 	p := NewIntN(n)
 	s := p.Slice(n)
 
-	s[0] = CInt(firstValue)
+	s[0] = Int(firstValue)
 	for i, v := range moreValues {
-		s[i+1] = CInt(v)
+		s[i+1] = Int(v)
 	}
 	return p
 }
-func NewIntN(n int) *CInt {
-	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(CInt(0))))
-	return (*CInt)(p)
+func NewIntN(n int) *Int {
+	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(Int(0))))
+	return (*Int)(p)
 }
-func (s *CInt) Slice(n int) []CInt {
-	return ((*[1 << 29]CInt)(unsafe.Pointer(s)))[0:n:n]
+func (s *Int) Slice(n int) []Int {
+	return ((*[1 << 29]Int)(unsafe.Pointer(s)))[0:n:n]
 }
-func (p *CInt) Free() {
+func (p *Int) Free() {
 	C.free(unsafe.Pointer(p))
 }
 
-func (s *CUint) Slice(n int) []CUint {
-	return ((*[1 << 29]CUint)(unsafe.Pointer(s)))[0:n:n]
+func (s *UInt) Slice(n int) []UInt {
+	return ((*[1 << 29]UInt)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (s *CFloat) Slice(n int) []float32 {
+func (s *Float) Slice(n int) []float32 {
 	return ((*[1 << 29]float32)(unsafe.Pointer(s)))[0:n:n]
 }
-func (s *CDouble) Slice(n int) []float64 {
+func (s *Double) Slice(n int) []float64 {
 	return ((*[1 << 28]float64)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (s *CSizeT) Slice(n int) []CSizeT {
-	return ((*[1 << 28]CSizeT)(unsafe.Pointer(s)))[0:n:n]
+func (s *SizeT) Slice(n int) []SizeT {
+	return ((*[1 << 28]SizeT)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (s *CInt8) Slice(n int) []int8 {
+func (s *Int8) Slice(n int) []int8 {
 	return ((*[1 << 31]int8)(unsafe.Pointer(s)))[0:n:n]
 }
-func (s *CUint8) Slice(n int) []uint8 {
+func (s *UInt8) Slice(n int) []uint8 {
 	return ((*[1 << 31]uint8)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (s *CInt16) Slice(n int) []int16 {
+func (s *Int16) Slice(n int) []int16 {
 	return ((*[1 << 30]int16)(unsafe.Pointer(s)))[0:n:n]
 }
-func (s *CUint16) Slice(n int) []uint16 {
+func (s *UInt16) Slice(n int) []uint16 {
 	return ((*[1 << 30]uint16)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (s *CInt32) Slice(n int) []int32 {
+func (s *Int32) Slice(n int) []int32 {
 	return ((*[1 << 29]int32)(unsafe.Pointer(s)))[0:n:n]
 }
-func (s *CUint32) Slice(n int) []uint32 {
+func (s *UInt32) Slice(n int) []uint32 {
 	return ((*[1 << 29]uint32)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (s *CInt64) Slice(n int) []int64 {
+func (s *Int64) Slice(n int) []int64 {
 	return ((*[1 << 28]int64)(unsafe.Pointer(s)))[0:n:n]
 }
-func (s *CUint64) Slice(n int) []uint64 {
+func (s *UInt64) Slice(n int) []uint64 {
 	return ((*[1 << 28]uint64)(unsafe.Pointer(s)))[0:n:n]
 }
