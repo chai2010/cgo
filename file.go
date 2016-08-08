@@ -19,30 +19,30 @@ static FILE *cgo_get_stderr(void) { return stderr; }
 */
 import "C"
 
-type CFile C.FILE
+type File C.FILE
 
 var (
-	Stdin  = (*CFile)(C.cgo_get_stdin())
-	Stdout = (*CFile)(C.cgo_get_stdout())
-	Stderr = (*CFile)(C.cgo_get_stderr())
+	Stdin  = (*File)(C.cgo_get_stdin())
+	Stdout = (*File)(C.cgo_get_stdout())
+	Stderr = (*File)(C.cgo_get_stderr())
 )
 
-func OpenFile(filename, mode *Char) *CFile {
-	return (*CFile)(C.fopen((*C.char)(filename), (*C.char)(mode)))
+func OpenFile(filename, mode *Char) *File {
+	return (*File)(C.fopen((*C.char)(filename), (*C.char)(mode)))
 }
 
-func TempFile() *CFile {
-	return (*CFile)(C.tmpfile())
+func TempFile() *File {
+	return (*File)(C.tmpfile())
 }
 
-func (f *CFile) Close() int {
+func (f *File) Close() int {
 	return int(C.fclose((*C.FILE)(f)))
 }
 
-func (f *CFile) Puts(s *Char) {
+func (f *File) Puts(s *Char) {
 	C.fputs((*C.char)(s), (*C.FILE)(f))
 }
 
-func (f *CFile) Flush() {
+func (f *File) Flush() {
 	C.fflush((*C.FILE)(f))
 }

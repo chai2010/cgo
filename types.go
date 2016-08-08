@@ -142,6 +142,18 @@ func (p *Float) Free() {
 
 // -----------------------------------------------------------------------------
 
+func NewDouble(firstValue float64, moreValues ...float64) *Double {
+	n := len(moreValues) + 1
+	p := NewDoubleN(n)
+	s := p.Slice(n)
+
+	s[0] = firstValue
+	for i, v := range moreValues {
+		s[i+1] = v
+	}
+	return p
+}
+
 func NewDoubleN(n int) *Double {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(Double(0))))
 	return (*Double)(p)
@@ -156,6 +168,18 @@ func (p *Double) Free() {
 }
 
 // -----------------------------------------------------------------------------
+
+func NewSizeT(firstValue int, moreValues ...int) *SizeT {
+	n := len(moreValues) + 1
+	p := NewSizeTN(n)
+	s := p.Slice(n)
+
+	s[0] = SizeT(firstValue)
+	for i, v := range moreValues {
+		s[i+1] = SizeT(v)
+	}
+	return p
+}
 
 func NewSizeTN(n int) *SizeT {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(SizeT(0))))
@@ -172,6 +196,18 @@ func (p *SizeT) Free() {
 
 // -----------------------------------------------------------------------------
 
+func NewInt8(firstValue int8, moreValues ...int8) *Int8 {
+	n := len(moreValues) + 1
+	p := NewInt8N(n)
+	s := p.Slice(n)
+
+	s[0] = firstValue
+	for i, v := range moreValues {
+		s[i+1] = v
+	}
+	return p
+}
+
 func NewInt8N(n int) *Int8 {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(Int8(0))))
 	return (*Int8)(p)
@@ -186,6 +222,18 @@ func (p *Int8) Free() {
 }
 
 // -----------------------------------------------------------------------------
+
+func NewUInt8(firstValue uint8, moreValues ...uint8) *UInt8 {
+	n := len(moreValues) + 1
+	p := NewUInt8N(n)
+	s := p.Slice(n)
+
+	s[0] = firstValue
+	for i, v := range moreValues {
+		s[i+1] = v
+	}
+	return p
+}
 
 func NewUInt8N(n int) *UInt8 {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(UInt8(0))))
@@ -202,6 +250,18 @@ func (p *UInt8) Free() {
 
 // -----------------------------------------------------------------------------
 
+func NewInt16(firstValue int16, moreValues ...int16) *Int16 {
+	n := len(moreValues) + 1
+	p := NewInt16N(n)
+	s := p.Slice(n)
+
+	s[0] = firstValue
+	for i, v := range moreValues {
+		s[i+1] = v
+	}
+	return p
+}
+
 func NewInt16N(n int) *Int16 {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(Int16(0))))
 	return (*Int16)(p)
@@ -216,6 +276,18 @@ func (p *Int16) Free() {
 }
 
 // -----------------------------------------------------------------------------
+
+func NewUInt16(firstValue uint16, moreValues ...uint16) *UInt16 {
+	n := len(moreValues) + 1
+	p := NewUInt16N(n)
+	s := p.Slice(n)
+
+	s[0] = firstValue
+	for i, v := range moreValues {
+		s[i+1] = v
+	}
+	return p
+}
 
 func NewUInt16N(n int) *UInt16 {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(UInt16(0))))
@@ -232,6 +304,18 @@ func (p *UInt16) Free() {
 
 // -----------------------------------------------------------------------------
 
+func NewInt32(firstValue int32, moreValues ...int32) *Int32 {
+	n := len(moreValues) + 1
+	p := NewInt32N(n)
+	s := p.Slice(n)
+
+	s[0] = firstValue
+	for i, v := range moreValues {
+		s[i+1] = v
+	}
+	return p
+}
+
 func NewInt32N(n int) *Int32 {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(Int32(0))))
 	return (*Int32)(p)
@@ -246,6 +330,18 @@ func (p *Int32) Free() {
 }
 
 // -----------------------------------------------------------------------------
+
+func NewUInt32(firstValue uint32, moreValues ...uint32) *UInt32 {
+	n := len(moreValues) + 1
+	p := NewUInt32N(n)
+	s := p.Slice(n)
+
+	s[0] = firstValue
+	for i, v := range moreValues {
+		s[i+1] = v
+	}
+	return p
+}
 
 func NewUInt32N(n int) *UInt32 {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(UInt32(0))))
@@ -262,6 +358,18 @@ func (p *UInt32) Free() {
 
 // -----------------------------------------------------------------------------
 
+func NewInt64(firstValue int64, moreValues ...int64) *Int64 {
+	n := len(moreValues) + 1
+	p := NewInt64N(n)
+	s := p.Slice(n)
+
+	s[0] = firstValue
+	for i, v := range moreValues {
+		s[i+1] = v
+	}
+	return p
+}
+
 func NewInt64N(n int) *Int64 {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(Int64(0))))
 	return (*Int64)(p)
@@ -276,6 +384,18 @@ func (p *Int64) Free() {
 }
 
 // -----------------------------------------------------------------------------
+
+func NewUInt64(firstValue uint64, moreValues ...uint64) *UInt64 {
+	n := len(moreValues) + 1
+	p := NewUInt64N(n)
+	s := p.Slice(n)
+
+	s[0] = firstValue
+	for i, v := range moreValues {
+		s[i+1] = v
+	}
+	return p
+}
 
 func NewUInt64N(n int) *UInt64 {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(UInt64(0))))
