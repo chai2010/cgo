@@ -27,7 +27,7 @@ var (
 	Stderr = (*CFile)(C.cgo_get_stderr())
 )
 
-func OpenFile(filename, mode *CChar) *CFile {
+func OpenFile(filename, mode *Char) *CFile {
 	return (*CFile)(C.fopen((*C.char)(filename), (*C.char)(mode)))
 }
 
@@ -39,7 +39,7 @@ func (f *CFile) Close() int {
 	return int(C.fclose((*C.FILE)(f)))
 }
 
-func (f *CFile) Puts(s *CChar) {
+func (f *CFile) Puts(s *Char) {
 	C.fputs((*C.char)(s), (*C.FILE)(f))
 }
 

@@ -25,6 +25,6 @@ func ErrnoSet(v int) {
 	C.cgo_set_errno(C.int(v))
 }
 
-func ErrnoDesc(errnum int) *CChar {
-	return (*CChar)(C.strerror(C.int(errnum)))
+func ErrnoDesc(errnum int) *Char {
+	return (*Char)(C.strerror(C.int(errnum)))
 }

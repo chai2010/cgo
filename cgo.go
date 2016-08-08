@@ -26,8 +26,8 @@ import (
 // It is the caller's responsibility to arrange for it to be
 // freed, such as by calling C.free (be sure to include stdlib.h
 // if C.free is needed).
-func CString(s string) *CChar {
-	return (*CChar)(C.CString(s))
+func CString(s string) *Char {
+	return (*Char)(C.CString(s))
 }
 
 // Go []byte slice to C array
@@ -40,12 +40,12 @@ func CBytes(s []byte) UnsafePointer {
 }
 
 // C string to Go string
-func GoString(s *CChar) string {
+func GoString(s *Char) string {
 	return C.GoString((*C.char)(s))
 }
 
 // C data with explicit length to Go string
-func GoStringN(s *CChar, n int) string {
+func GoStringN(s *Char, n int) string {
 	return C.GoStringN((*C.char)(s), C.int(n))
 }
 

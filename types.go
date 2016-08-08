@@ -10,7 +10,7 @@ import "C"
 import "unsafe"
 
 type (
-	CChar   C.char
+	Char    C.char
 	CInt    C.int
 	CUint   C.uint
 	CFloat  C.float
@@ -32,7 +32,7 @@ type (
 	UnsafePointer uintptr
 )
 
-func NewChar(firstValue int, moreValues ...int) *CChar {
+func NewChar(firstValue int, moreValues ...int) *Char {
 	n := len(moreValues) + 1
 	p := NewCharN(n)
 	s := p.Slice(n)
@@ -43,14 +43,14 @@ func NewChar(firstValue int, moreValues ...int) *CChar {
 	}
 	return p
 }
-func NewCharN(n int) *CChar {
-	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(CChar(0))))
-	return (*CChar)(p)
+func NewCharN(n int) *Char {
+	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(Char(0))))
+	return (*Char)(p)
 }
-func (s *CChar) Slice(n int) []byte {
+func (s *Char) Slice(n int) []byte {
 	return ((*[1 << 31]byte)(unsafe.Pointer(s)))[0:n:n]
 }
-func (s *CChar) Free() {
+func (s *Char) Free() {
 	C.free(unsafe.Pointer(s))
 }
 
