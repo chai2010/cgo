@@ -38,8 +38,8 @@ func NewCharFormat(format string, args ...interface{}) *CChar {
 func (s *CChar) Slice(n int) []byte {
 	return ((*[1 << 31]byte)(unsafe.Pointer(s)))[0:n:n]
 }
-func (p *CChar) Free() {
-	C.free(unsafe.Pointer(p))
+func (s *CChar) Free() {
+	C.free(unsafe.Pointer(s))
 }
 
 func (s *CChar) IsEmpty() bool {
@@ -85,28 +85,28 @@ func (dst *CChar) Strncat(src *CChar, num int) *CChar {
 	return (*CChar)(C.strncat((*C.char)(dst), (*C.char)(src), C.size_t(num)))
 }
 
-func (p *CChar) Strchr(ch int) *CChar {
-	return (*CChar)(C.strchr((*C.char)(p), C.int(ch)))
+func (s *CChar) Strchr(ch int) *CChar {
+	return (*CChar)(C.strchr((*C.char)(s), C.int(ch)))
 }
 
-func (s1 *CChar) Strrchr(ch int) *CChar {
-	return (*CChar)(C.strrchr((*C.char)(s1), (C.int)(ch)))
+func (s *CChar) Strrchr(ch int) *CChar {
+	return (*CChar)(C.strrchr((*C.char)(s), (C.int)(ch)))
 }
 
-func (s1 *CChar) Strstr(s2 *CChar) *CChar {
-	return (*CChar)(C.strstr((*C.char)(s1), (*C.char)(s2)))
+func (s *CChar) Strstr(s2 *CChar) *CChar {
+	return (*CChar)(C.strstr((*C.char)(s), (*C.char)(s2)))
 }
 
-func (s1 *CChar) Strcspn(s2 *CChar) int {
-	return int(C.strcspn((*C.char)(s1), (*C.char)(s2)))
+func (s *CChar) Strcspn(s2 *CChar) int {
+	return int(C.strcspn((*C.char)(s), (*C.char)(s2)))
 }
 
-func (s1 *CChar) Strspn(s2 *CChar) int {
-	return (int)(C.strspn((*C.char)(s1), (*C.char)(s2)))
+func (s *CChar) Strspn(s2 *CChar) int {
+	return (int)(C.strspn((*C.char)(s), (*C.char)(s2)))
 }
 
-func (s1 *CChar) Strpbrk(s2 *CChar) *CChar {
-	return (*CChar)(C.strpbrk((*C.char)(s1), (*C.char)(s2)))
+func (s *CChar) Strpbrk(s2 *CChar) *CChar {
+	return (*CChar)(C.strpbrk((*C.char)(s), (*C.char)(s2)))
 }
 
 func (s *CChar) Strtok(delimiters *CChar) *CChar {
