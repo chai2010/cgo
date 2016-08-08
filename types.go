@@ -32,28 +32,6 @@ type (
 	UnsafePointer uintptr
 )
 
-func NewChar(firstValue int, moreValues ...int) *CChar {
-	n := len(moreValues) + 1
-	p := NewCharN(n)
-	s := p.Slice(n)
-
-	s[0] = byte(firstValue)
-	for i, v := range moreValues {
-		s[i+1] = byte(v)
-	}
-	return p
-}
-func NewCharN(n int) *CChar {
-	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(CChar(0))))
-	return (*CChar)(p)
-}
-func (s *CChar) Slice(n int) []byte {
-	return ((*[1 << 31]byte)(unsafe.Pointer(s)))[0:n:n]
-}
-func (p *CChar) Free() {
-	C.free(unsafe.Pointer(p))
-}
-
 func NewInt(firstValue int, moreValues ...int) *CInt {
 	n := len(moreValues) + 1
 	p := NewIntN(n)

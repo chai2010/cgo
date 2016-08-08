@@ -7,26 +7,6 @@ package cgo
 //#include <string.h>
 import "C"
 
-import (
-	"unsafe"
-)
-
-func Memcpy(dst, src unsafe.Pointer, num int) unsafe.Pointer {
-	return C.memcpy(dst, src, C.size_t(num))
-}
-
-func Memset(p unsafe.Pointer, value, num int) unsafe.Pointer {
-	return C.memset(p, C.int(value), C.size_t(num))
-}
-
-func Memmove(dst, src unsafe.Pointer, num int) unsafe.Pointer {
-	return C.memmove(dst, src, C.size_t(num))
-}
-
-func Memchr(p unsafe.Pointer, value, num int) unsafe.Pointer {
-	return C.memchr(p, C.int(value), C.size_t(num))
-}
-
 func Strlen(s *CChar) int {
 	return int(C.strlen((*C.char)(s)))
 }

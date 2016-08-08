@@ -28,6 +28,11 @@ func (p UnsafePointer) Free() {
 	C.free(unsafe.Pointer(p))
 }
 
+// C data with explicit length to Go []byte
+func (s UnsafePointer) GoBytes(n int) []byte {
+	return C.GoBytes(unsafe.Pointer(s), C.int(n))
+}
+
 func (s UnsafePointer) Slice(n int) []byte {
 	return ((*[1 << 31]byte)(unsafe.Pointer(s)))[0:n:n]
 }
