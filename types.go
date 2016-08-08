@@ -411,3 +411,57 @@ func (p *UInt64) Free() {
 }
 
 // -----------------------------------------------------------------------------
+
+func NewIntPtr(firstValue uintptr, moreValues ...uintptr) *IntPtr {
+	n := len(moreValues) + 1
+	p := NewIntPtrN(n)
+	s := p.Slice(n)
+
+	s[0] = IntPtr(firstValue)
+	for i, v := range moreValues {
+		s[i+1] = IntPtr(v)
+	}
+	return p
+}
+
+func NewIntPtrN(n int) *IntPtr {
+	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(IntPtr(0))))
+	return (*IntPtr)(p)
+}
+
+func (s *IntPtr) Slice(n int) []IntPtr {
+	return ((*[1 << 28]IntPtr)(unsafe.Pointer(s)))[0:n:n]
+}
+
+func (p *IntPtr) Free() {
+	C.free(unsafe.Pointer(p))
+}
+
+// -----------------------------------------------------------------------------
+
+func NewUIntPtr(firstValue uintptr, moreValues ...uintptr) *UIntPtr {
+	n := len(moreValues) + 1
+	p := NewUIntPtrN(n)
+	s := p.Slice(n)
+
+	s[0] = UIntPtr(firstValue)
+	for i, v := range moreValues {
+		s[i+1] = UIntPtr(v)
+	}
+	return p
+}
+
+func NewUIntPtrN(n int) *UIntPtr {
+	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(UIntPtr(0))))
+	return (*UIntPtr)(p)
+}
+
+func (s *UIntPtr) Slice(n int) []UIntPtr {
+	return ((*[1 << 28]UIntPtr)(unsafe.Pointer(s)))[0:n:n]
+}
+
+func (p *UIntPtr) Free() {
+	C.free(unsafe.Pointer(p))
+}
+
+// -----------------------------------------------------------------------------
