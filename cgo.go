@@ -50,6 +50,6 @@ func GoStringN(s *CChar, n int) string {
 }
 
 // C data with explicit length to Go []byte
-func GoBytes(s unsafe.Pointer, n int) []byte {
-	return C.GoBytes(s, C.int(n))
+func GoBytes(s UnsafePointer, n int) []byte {
+	return C.GoBytes(unsafe.Pointer(s), C.int(n))
 }
