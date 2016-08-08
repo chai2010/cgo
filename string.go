@@ -13,33 +13,13 @@ import (
 	"unsafe"
 )
 
-func NewChar(firstValue int, moreValues ...int) *CChar {
-	n := len(moreValues) + 1
-	p := NewCharN(n)
-	s := p.Slice(n)
-
-	s[0] = byte(firstValue)
-	for i, v := range moreValues {
-		s[i+1] = byte(v)
-	}
-	return p
-}
-
-func NewCharN(n int) *CChar {
-	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(CChar(0))))
-	return (*CChar)(p)
+func NewCharString(s string) *CChar {
+	return (*CChar)(C.CString(s))
 }
 
 func NewCharFormat(format string, args ...interface{}) *CChar {
 	s := fmt.Sprintf(format, args...)
 	return CString(s)
-}
-
-func (s *CChar) Slice(n int) []byte {
-	return ((*[1 << 31]byte)(unsafe.Pointer(s)))[0:n:n]
-}
-func (s *CChar) Free() {
-	C.free(unsafe.Pointer(s))
 }
 
 func (s *CChar) IsEmpty() bool {
