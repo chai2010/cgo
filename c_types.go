@@ -4,14 +4,12 @@
 
 package cgo
 
-//#include <stdbool.h>
 //#include <stdint.h>
 //#include <stdlib.h>
 import "C"
 import "unsafe"
 
 type (
-	CBool   C.bool
 	CChar   C.char
 	CInt    C.int
 	CUint   C.uint
@@ -34,29 +32,50 @@ type (
 	UnsafePointer uintptr
 )
 
-func NewBool() *CBool {
-	panic("TODO")
-}
-func NewBoolN(n int) *CBool {
-	panic("TODO")
-}
-func NewBoolWith(args ...bool) *CBool {
-	panic("TODO")
-}
-func (s *CBool) Slice(n int) []CBool {
-	return ((*[1 << 31]CBool)(unsafe.Pointer(s)))[0:n:n]
-}
-func (p *CBool) Free() {
-	C.free(unsafe.Pointer(p))
-}
+func NewChar(firstValue int, moreValues ...int) *CChar {
+	n := len(moreValues) + 1
+	p := NewCharN(n)
+	s := p.Slice(n)
 
+	s[0] = byte(firstValue)
+	for i, v := range moreValues {
+		s[i+1] = byte(v)
+	}
+	return p
+}
+func NewCharN(n int) *CChar {
+	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(CChar(0))))
+	return (*CChar)(p)
+}
 func (s *CChar) Slice(n int) []byte {
 	return ((*[1 << 31]byte)(unsafe.Pointer(s)))[0:n:n]
 }
+func (p *CChar) Free() {
+	C.free(unsafe.Pointer(p))
+}
 
+func NewInt(firstValue int, moreValues ...int) *CInt {
+	n := len(moreValues) + 1
+	p := NewIntN(n)
+	s := p.Slice(n)
+
+	s[0] = CInt(firstValue)
+	for i, v := range moreValues {
+		s[i+1] = CInt(v)
+	}
+	return p
+}
+func NewIntN(n int) *CInt {
+	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(CInt(0))))
+	return (*CInt)(p)
+}
 func (s *CInt) Slice(n int) []CInt {
 	return ((*[1 << 29]CInt)(unsafe.Pointer(s)))[0:n:n]
 }
+func (p *CInt) Free() {
+	C.free(unsafe.Pointer(p))
+}
+
 func (s *CUint) Slice(n int) []CUint {
 	return ((*[1 << 29]CUint)(unsafe.Pointer(s)))[0:n:n]
 }

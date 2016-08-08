@@ -10,10 +10,7 @@ import "C"
 
 import (
 	"fmt"
-	"unsafe"
 )
-
-var _EmptyString = CString("")
 
 func Sprintf(format string, args ...interface{}) *CChar {
 	s := fmt.Sprintf(format, args...)
@@ -29,10 +26,6 @@ func (s *CChar) Len() int {
 }
 
 func (s *CChar) Dup() *CChar {
-	if s == nil {
-		s = _EmptyString
-	}
-
 	d := (*CChar)(C.malloc(C.strlen((*C.char)(s)) + 1))
 	if d == nil {
 		return nil
@@ -43,11 +36,4 @@ func (s *CChar) Dup() *CChar {
 
 func (s *CChar) GoString() string {
 	return C.GoString((*C.char)(s))
-}
-
-func (s *CChar) Free() {
-	if s == nil || s == _EmptyString {
-		return
-	}
-	C.free(unsafe.Pointer(s))
 }
