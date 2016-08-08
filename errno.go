@@ -6,6 +6,7 @@ package cgo
 
 /*
 #include <errno.h>
+#include <string.h>
 
 static int cgo_get_errno() {
 	return errno;
@@ -19,6 +20,11 @@ import "C"
 func Errno() int {
 	return int(C.cgo_get_errno())
 }
+
 func ErrnoSet(v int) {
 	C.cgo_set_errno(C.int(v))
+}
+
+func ErrnoDesc(errnum int) *CChar {
+	return (*CChar)(C.strerror(C.int(errnum)))
 }

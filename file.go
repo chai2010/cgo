@@ -27,8 +27,12 @@ var (
 	Stderr = (*CFile)(C.cgo_get_stderr())
 )
 
-func Fopen(filename, mode *CChar) *CFile {
+func OpenFile(filename, mode *CChar) *CFile {
 	return (*CFile)(C.fopen((*C.char)(filename), (*C.char)(mode)))
+}
+
+func TempFile() *CFile {
+	return (*CFile)(C.tmpfile())
 }
 
 func (f *CFile) Close() int {

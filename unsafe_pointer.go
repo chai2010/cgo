@@ -70,18 +70,18 @@ func (s UnsafePointer) Float64Slice(n int) []float64 {
 	return ((*[1 << 28]float64)(unsafe.Pointer(s)))[0:n:n]
 }
 
-func (p UnsafePointer) Memcpy(src UnsafePointer, num int) {
-	C.memcpy(unsafe.Pointer(p), unsafe.Pointer(src), C.size_t(num))
+func (p UnsafePointer) Memcpy(src UnsafePointer, num int) UnsafePointer {
+	return UnsafePointer(C.memcpy(unsafe.Pointer(p), unsafe.Pointer(src), C.size_t(num)))
 }
 
-func (p UnsafePointer) Memset(value, num int) {
-	C.memset(unsafe.Pointer(p), C.int(value), C.size_t(num))
+func (p UnsafePointer) Memset(value, num int) UnsafePointer {
+	return UnsafePointer(C.memset(unsafe.Pointer(p), C.int(value), C.size_t(num)))
 }
 
-func (p UnsafePointer) Memmove(src UnsafePointer, num int) {
-	C.memmove(unsafe.Pointer(p), unsafe.Pointer(src), C.size_t(num))
+func (p UnsafePointer) Memmove(src UnsafePointer, num int) UnsafePointer {
+	return UnsafePointer(C.memmove(unsafe.Pointer(p), unsafe.Pointer(src), C.size_t(num)))
 }
 
-func (p UnsafePointer) Memchr(value, num int) {
-	C.memchr(unsafe.Pointer(p), C.int(value), C.size_t(num))
+func (p UnsafePointer) Memchr(value, num int) UnsafePointer {
+	return UnsafePointer(C.memchr(unsafe.Pointer(p), C.int(value), C.size_t(num)))
 }
