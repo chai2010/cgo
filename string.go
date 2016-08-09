@@ -59,7 +59,7 @@ func (s *String) AssignByGoString(str string) {
 }
 func (s *String) AssignByGoBytes(str []byte) {
 	C.chai2010_cgo_String_AssignStrN((*C.chai2010_cgo_String_T)(s),
-		(*C.char)(unsafe.Pointer((*reflect.StringHeader)(unsafe.Pointer(&str)).Data)),
+		(*C.char)(unsafe.Pointer((*reflect.SliceHeader)(unsafe.Pointer(&str)).Data)),
 		C.int(len(str)),
 	)
 }
@@ -70,7 +70,7 @@ func (s *String) GoString() string {
 
 func (s *String) GoSlice() []byte {
 	if p, n := s.Data(), s.Size(); n > 0 {
-		return (*[1 << 30]byte)(unsafe.Pointer(p))[0:n:n]
+		return (*[1 << 31]byte)(unsafe.Pointer(p))[0:n:n]
 	}
 	return nil
 }
