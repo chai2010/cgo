@@ -8,14 +8,20 @@ package cgo
 import "C"
 
 import (
+	"fmt"
 	"reflect"
 	"unsafe"
 )
 
 type String C.chai2010_cgo_String_T
 
-func NewString() *String {
-	return (*String)(C.chai2010_cgo_String_New())
+func NewString(s string) *String {
+	p := (*String)(C.chai2010_cgo_String_New())
+	p.AssignByGoString(s)
+	return p
+}
+func NewStringFormat(format string, args ...interface{}) *String {
+	return NewString(fmt.Sprintf(format, args...))
 }
 func NewStringFromStr(s *Char) *String {
 	return (*String)(C.chai2010_cgo_String_NewFromStr((*C.char)(s)))

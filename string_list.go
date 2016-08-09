@@ -14,8 +14,13 @@ import (
 
 type StringList C.chai2010_cgo_StringList_T
 
-func NewStringList() *StringList {
-	return (*StringList)(C.chai2010_cgo_StringList_New())
+func NewStringList(args ...string) *StringList {
+	p := (*StringList)(C.chai2010_cgo_StringList_New())
+	p.Resize(len(args))
+	for i, s := range args {
+		p.AssignByGoString(i, s)
+	}
+	return p
 }
 func (p *StringList) Delete() {
 	C.chai2010_cgo_StringList_Delete((*C.chai2010_cgo_StringList_T)(p))
