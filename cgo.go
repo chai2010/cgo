@@ -8,6 +8,7 @@ package cgo
 
 /*
 #cgo CXXFLAGS: -std=c++11
+#cgo windows LDFLAGS: -Wl,--allow-multiple-definition
 
 #include <stdint.h>
 #include <stdlib.h>
