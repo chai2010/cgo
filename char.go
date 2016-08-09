@@ -12,10 +12,6 @@ import (
 	"fmt"
 )
 
-func NewCharString(s string) *Char {
-	return (*Char)(C.CString(s))
-}
-
 func NewCharFormat(format string, args ...interface{}) *Char {
 	s := fmt.Sprintf(format, args...)
 	return CString(s)
