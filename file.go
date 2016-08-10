@@ -6,6 +6,8 @@ package cgo
 
 /*
 #include <stdio.h>
+#include <string.h>
+#include <errno.h>
 
 // on mingw, stderr and stdout are defined as &_iob[FILENO]
 // on netbsd, they are defined as &__sF[FILENO]
@@ -20,10 +22,22 @@ static FILE *cgo_get_stderr(void) { return stderr; }
 import "C"
 
 import (
+	"errors"
+	"io"
 	"unsafe"
 )
 
 type File C.FILE
+
+var (
+	_ io.Seeker = (*File)(nil)
+	_ io.Reader = (*File)(nil)
+	_ io.Writer = (*File)(nil)
+	_ io.Closer = (*File)(nil)
+
+	_ io.ByteReader = (*File)(nil)
+	_ io.ByteWriter = (*File)(nil)
+)
 
 var (
 	Stdin  = (*File)(C.cgo_get_stdin())
@@ -39,20 +53,61 @@ func TempFile() *File {
 	return (*File)(C.tmpfile())
 }
 
-func (f *File) Close() int {
-	return int(C.fclose((*C.FILE)(f)))
+func (f *File) Close() error {
+	n := int(C.fclose((*C.FILE)(f)))
+	if n != 0 {
+		return io.EOF
+	}
+	return nil
 }
 
 func (f *File) Flush() {
 	C.fflush((*C.FILE)(f))
 }
 
-func (f *File) Read(buf []byte) int {
-	return int(C.fread(unsafe.Pointer(&buf[0]), C.size_t(1), C.size_t(len(buf)), (*C.FILE)(f)))
+func (f *File) Read(buf []byte) (int, error) {
+	n := int(C.fread(unsafe.Pointer(&buf[0]), C.size_t(1), C.size_t(len(buf)), (*C.FILE)(f)))
+	if n == len(buf) {
+		return n, nil
+	}
+	if f.Eof() != 0 {
+		return 0, io.EOF
+	}
+	err := errors.New(C.GoString(C.strerror(C.int(f.Error()))))
+	return 0, err
 }
 
-func (f *File) Write(buf []byte) int {
-	return int(C.fwrite(unsafe.Pointer(&buf[0]), C.size_t(1), C.size_t(len(buf)), (*C.FILE)(f)))
+func (f *File) Write(buf []byte) (int, error) {
+	n := int(C.fwrite(unsafe.Pointer(&buf[0]), C.size_t(1), C.size_t(len(buf)), (*C.FILE)(f)))
+	if n == len(buf) {
+		return n, nil
+	}
+	if f.Eof() != 0 {
+		return 0, io.EOF
+	}
+	err := errors.New(C.GoString(C.strerror(C.int(f.Error()))))
+	return 0, err
+}
+
+func (f *File) ReadByte() (c byte, err error) {
+	if ch := f.Getc(); ch >= 0 {
+		return byte(ch), nil
+	}
+	if f.Eof() != 0 {
+		return 0, io.EOF
+	}
+	err = errors.New(C.GoString(C.strerror(C.int(f.Error()))))
+	return 0, err
+}
+func (f *File) WriteByte(c byte) error {
+	if n := f.Putc(int(c)); n != int(C.EOF) {
+		return nil
+	}
+	if f.Eof() != 0 {
+		return io.EOF
+	}
+	err := errors.New(C.GoString(C.strerror(C.int(f.Error()))))
+	return err
 }
 
 func (f *File) Puts(s *Char) {
@@ -75,12 +130,18 @@ func (f *File) Ungetc(ch int) int {
 	return int(C.ungetc(C.int(ch), (*C.FILE)(f)))
 }
 
-func (f *File) Tell() int {
-	return int(C.ftell((*C.FILE)(f)))
+func (f *File) Tell() int64 {
+	return int64(C.ftell((*C.FILE)(f)))
 }
-func (f *File) Seek(off, origin int) int {
-	return int(C.fseek((*C.FILE)(f), C.long(off), C.int(origin)))
+func (f *File) Seek(off int64, origin int) (int64, error) {
+	n := int(C.fseek((*C.FILE)(f), C.long(off), C.int(origin)))
+	if n == 0 {
+		return f.Tell(), nil
+	}
+	err := errors.New(C.GoString(C.strerror(C.int(f.Error()))))
+	return 0, err
 }
+
 func (f *File) Rewind() {
 	C.rewind((*C.FILE)(f))
 }
