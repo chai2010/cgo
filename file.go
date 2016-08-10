@@ -6,6 +6,7 @@ package cgo
 
 /*
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 
@@ -39,7 +40,16 @@ var (
 	_ io.ByteWriter = (*File)(nil)
 )
 
-const EOF = C.EOF
+const (
+	EOF = C.EOF
+
+	EXIT_SUCCESS = C.EXIT_SUCCESS
+	EXIT_FAILURE = C.EXIT_FAILURE
+
+	SEEK_CUR = C.SEEK_CUR
+	SEEK_SET = C.SEEK_SET
+	SEEK_END = C.SEEK_END
+)
 
 var (
 	Stdin  = (*File)(C.cgo_get_stdin())
