@@ -39,6 +39,8 @@ var (
 	_ io.ByteWriter = (*File)(nil)
 )
 
+const EOF = C.EOF
+
 var (
 	Stdin  = (*File)(C.cgo_get_stdin())
 	Stdout = (*File)(C.cgo_get_stdout())
