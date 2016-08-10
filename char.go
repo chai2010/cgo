@@ -14,7 +14,7 @@ import (
 
 func NewCharFormat(format string, args ...interface{}) *Char {
 	s := fmt.Sprintf(format, args...)
-	return CString(s)
+	return (*Char)(C.CString(s))
 }
 
 func (s *Char) IsEmpty() bool {
