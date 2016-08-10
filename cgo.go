@@ -36,8 +36,8 @@ func CString(s string) *Char {
 // It is the caller's responsibility to arrange for it to be
 // freed, such as by calling C.free (be sure to include stdlib.h
 // if C.free is needed).
-func CBytes(s []byte) UnsafePointer {
-	return UnsafePointer(C.CBytes(s))
+func CBytes(s []byte) VoidPointer {
+	return VoidPointer(C.CBytes(s))
 }
 
 // C string to Go string
@@ -51,6 +51,6 @@ func GoStringN(s *Char, n int) string {
 }
 
 // C data with explicit length to Go []byte
-func GoBytes(s UnsafePointer, n int) []byte {
+func GoBytes(s VoidPointer, n int) []byte {
 	return C.GoBytes(unsafe.Pointer(s), C.int(n))
 }

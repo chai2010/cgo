@@ -29,7 +29,7 @@ type (
 	UInt64  C.uint64_t
 	UIntPtr C.uintptr_t
 
-	UnsafePointer uintptr
+	VoidPointer uintptr
 )
 
 // -----------------------------------------------------------------------------
