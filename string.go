@@ -44,7 +44,7 @@ func (s *String) Clear() {
 }
 
 func (s *String) Data() *Char {
-	return (*Char)(C.chai2010_cgo_String_CStr((*C.chai2010_cgo_String_T)(s)))
+	return (*Char)(C.chai2010_cgo_String_Data((*C.chai2010_cgo_String_T)(s)))
 }
 func (s *String) CStr() *Char {
 	return (*Char)(C.chai2010_cgo_String_CStr((*C.chai2010_cgo_String_T)(s)))
