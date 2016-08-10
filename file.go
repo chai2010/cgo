@@ -19,6 +19,10 @@ static FILE *cgo_get_stderr(void) { return stderr; }
 */
 import "C"
 
+import (
+	"unsafe"
+)
+
 type File C.FILE
 
 var (
@@ -39,10 +43,54 @@ func (f *File) Close() int {
 	return int(C.fclose((*C.FILE)(f)))
 }
 
+func (f *File) Flush() {
+	C.fflush((*C.FILE)(f))
+}
+
+func (f *File) Read(buf []byte) int {
+	return int(C.fread(unsafe.Pointer(&buf[0]), C.size_t(1), C.size_t(len(buf)), (*C.FILE)(f)))
+}
+
+func (f *File) Write(buf []byte) int {
+	return int(C.fwrite(unsafe.Pointer(&buf[0]), C.size_t(1), C.size_t(len(buf)), (*C.FILE)(f)))
+}
+
 func (f *File) Puts(s *Char) {
 	C.fputs((*C.char)(s), (*C.FILE)(f))
 }
 
-func (f *File) Flush() {
-	C.fflush((*C.FILE)(f))
+func (f *File) Getc() int {
+	return int(C.fgetc((*C.FILE)(f)))
+}
+
+func (f *File) Gets(buf []byte) *Char {
+	return (*Char)(C.fgets((*C.char)(unsafe.Pointer(&buf[0])), C.int(len(buf)), (*C.FILE)(f)))
+}
+
+func (f *File) Putc(ch int) int {
+	return int(C.fputc(C.int(ch), (*C.FILE)(f)))
+}
+
+func (f *File) Ungetc(ch int) int {
+	return int(C.ungetc(C.int(ch), (*C.FILE)(f)))
+}
+
+func (f *File) Tell() int {
+	return int(C.ftell((*C.FILE)(f)))
+}
+func (f *File) Seek(off, origin int) int {
+	return int(C.fseek((*C.FILE)(f), C.long(off), C.int(origin)))
+}
+func (f *File) Rewind() {
+	C.rewind((*C.FILE)(f))
+}
+
+func (f *File) Eof() int {
+	return int(C.feof((*C.FILE)(f)))
+}
+func (f *File) Error() int {
+	return int(C.ferror((*C.FILE)(f)))
+}
+func (f *File) ClearErr() {
+	C.clearerr((*C.FILE)(f))
 }
