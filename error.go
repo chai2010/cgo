@@ -7,10 +7,6 @@ package cgo
 //#include "./c_error.h"
 import "C"
 
-import (
-	"fmt"
-)
-
 type Error C.chai2010_cgo_Error_T
 
 func NewError(code int, desc *Char) *Error {
@@ -30,8 +26,4 @@ func (p *Error) GetCode() int {
 
 func (p *Error) GetText() *Char {
 	return (*Char)(C.chai2010_cgo_Error_GetText((*C.chai2010_cgo_Error_T)(p)))
-}
-
-func (p *Error) Error() string {
-	return fmt.Sprintf("code = %d desc = %s", p.GetCode(), GoString(p.GetText()))
 }
