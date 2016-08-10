@@ -18,10 +18,6 @@ package cgo
 */
 import "C"
 
-import (
-	"unsafe"
-)
-
 // Go string to C string
 // The C string is allocated in the C heap using malloc.
 // It is the caller's responsibility to arrange for it to be
@@ -38,19 +34,4 @@ func NewCharString(s string) *Char {
 // if C.free is needed).
 func NewBytes(s []byte) VoidPointer {
 	return VoidPointer(C.CBytes(s))
-}
-
-// C string to Go string
-func GoString(s *Char) string {
-	return C.GoString((*C.char)(s))
-}
-
-// C data with explicit length to Go string
-func GoStringN(s *Char, n int) string {
-	return C.GoStringN((*C.char)(s), C.int(n))
-}
-
-// C data with explicit length to Go []byte
-func GoBytes(s VoidPointer, n int) []byte {
-	return C.GoBytes(unsafe.Pointer(s), C.int(n))
 }

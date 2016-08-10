@@ -10,6 +10,7 @@ import "C"
 
 import (
 	"fmt"
+	"unsafe"
 )
 
 func NewCharFormat(format string, args ...interface{}) *Char {
@@ -29,6 +30,10 @@ func (s *Char) GoString() string {
 // C data with explicit length to Go string
 func (s *Char) GoStringN(n int) string {
 	return C.GoStringN((*C.char)(s), C.int(n))
+}
+
+func (s *Char) GoBytes(n int) []byte {
+	return C.GoBytes(unsafe.Pointer(s), C.int(n))
 }
 
 func (s *Char) Strlen() int {
