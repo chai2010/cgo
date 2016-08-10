@@ -12,6 +12,15 @@ import (
 	"unsafe"
 )
 
+// Go []byte slice to C array
+// The C array is allocated in the C heap using malloc.
+// It is the caller's responsibility to arrange for it to be
+// freed, such as by calling C.free (be sure to include stdlib.h
+// if C.free is needed).
+func NewBytes(s []byte) VoidPointer {
+	return VoidPointer(C.CBytes(s))
+}
+
 func Malloc(n int) VoidPointer {
 	return VoidPointer(C.malloc(C.size_t(n)))
 }

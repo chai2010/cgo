@@ -13,6 +13,15 @@ import (
 	"unsafe"
 )
 
+// Go string to C string
+// The C string is allocated in the C heap using malloc.
+// It is the caller's responsibility to arrange for it to be
+// freed, such as by calling C.free (be sure to include stdlib.h
+// if C.free is needed).
+func NewCharString(s string) *Char {
+	return (*Char)(C.CString(s))
+}
+
 func NewCharFormat(format string, args ...interface{}) *Char {
 	s := fmt.Sprintf(format, args...)
 	return (*Char)(C.CString(s))

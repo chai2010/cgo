@@ -10,28 +10,5 @@ package cgo
 #cgo CXXFLAGS: -std=c++11
 #cgo windows LDFLAGS: -Wl,--allow-multiple-definition
 
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-
 */
 import "C"
-
-// Go string to C string
-// The C string is allocated in the C heap using malloc.
-// It is the caller's responsibility to arrange for it to be
-// freed, such as by calling C.free (be sure to include stdlib.h
-// if C.free is needed).
-func NewCharString(s string) *Char {
-	return (*Char)(C.CString(s))
-}
-
-// Go []byte slice to C array
-// The C array is allocated in the C heap using malloc.
-// It is the caller's responsibility to arrange for it to be
-// freed, such as by calling C.free (be sure to include stdlib.h
-// if C.free is needed).
-func NewBytes(s []byte) VoidPointer {
-	return VoidPointer(C.CBytes(s))
-}
