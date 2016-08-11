@@ -52,6 +52,9 @@ func NewCharN(n int) *Char {
 }
 
 func (s *Char) Slice(n int) []byte {
+	if n == 0 {
+		n = s.Strlen()
+	}
 	return ((*[1 << 31]byte)(unsafe.Pointer(s)))[0:n:n]
 }
 
