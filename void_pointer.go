@@ -38,6 +38,16 @@ func (p VoidPointer) Free() {
 	C.free(unsafe.Pointer(p))
 }
 
+// C string to Go string
+func (p *VoidPointer) GoString() string {
+	return (*Char)(unsafe.Pointer(p)).GoString()
+}
+
+// C data with explicit length to Go string
+func (p *VoidPointer) GoStringN(n int) string {
+	return (*Char)(unsafe.Pointer(p)).GoStringN(n)
+}
+
 // C data with explicit length to Go []byte
 func (p VoidPointer) GoBytes(n int) []byte {
 	return C.GoBytes(unsafe.Pointer(p), C.int(n))
