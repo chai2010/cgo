@@ -39,12 +39,12 @@ func (p VoidPointer) Free() {
 }
 
 // C string to Go string
-func (p *VoidPointer) GoString() string {
+func (p VoidPointer) GoString() string {
 	return (*Char)(unsafe.Pointer(p)).GoString()
 }
 
 // C data with explicit length to Go string
-func (p *VoidPointer) GoStringN(n int) string {
+func (p VoidPointer) GoStringN(n int) string {
 	return (*Char)(unsafe.Pointer(p)).GoStringN(n)
 }
 
