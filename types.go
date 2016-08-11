@@ -81,8 +81,8 @@ func NewIntN(n int) *Int {
 	return (*Int)(p)
 }
 
-func (s *Int) Slice(n int) []Int {
-	return ((*[1 << 29]Int)(unsafe.Pointer(s)))[0:n:n]
+func (p *Int) Slice(n int) []Int {
+	return ((*[1 << 29]Int)(unsafe.Pointer(p)))[0:n:n]
 }
 
 func (p *Int) Free() {
@@ -108,8 +108,8 @@ func NewUIntN(n int) *UInt {
 	return (*UInt)(p)
 }
 
-func (s *UInt) Slice(n int) []UInt {
-	return ((*[1 << 29]UInt)(unsafe.Pointer(s)))[0:n:n]
+func (p *UInt) Slice(n int) []UInt {
+	return ((*[1 << 29]UInt)(unsafe.Pointer(p)))[0:n:n]
 }
 
 func (p *UInt) Free() {
@@ -135,8 +135,8 @@ func NewFloatN(n int) *Float {
 	return (*Float)(p)
 }
 
-func (s *Float) Slice(n int) []float32 {
-	return ((*[1 << 29]float32)(unsafe.Pointer(s)))[0:n:n]
+func (p *Float) Slice(n int) []float32 {
+	return ((*[1 << 29]float32)(unsafe.Pointer(p)))[0:n:n]
 }
 
 func (p *Float) Free() {
@@ -162,8 +162,8 @@ func NewDoubleN(n int) *Double {
 	return (*Double)(p)
 }
 
-func (s *Double) Slice(n int) []float64 {
-	return ((*[1 << 28]float64)(unsafe.Pointer(s)))[0:n:n]
+func (p *Double) Slice(n int) []float64 {
+	return ((*[1 << 28]float64)(unsafe.Pointer(p)))[0:n:n]
 }
 
 func (p *Double) Free() {
@@ -189,8 +189,8 @@ func NewSizeTN(n int) *SizeT {
 	return (*SizeT)(p)
 }
 
-func (s *SizeT) Slice(n int) []SizeT {
-	return ((*[1 << 28]SizeT)(unsafe.Pointer(s)))[0:n:n]
+func (p *SizeT) Slice(n int) []SizeT {
+	return ((*[1 << 28]SizeT)(unsafe.Pointer(p)))[0:n:n]
 }
 
 func (p *SizeT) Free() {
@@ -216,8 +216,8 @@ func NewInt8N(n int) *Int8 {
 	return (*Int8)(p)
 }
 
-func (s *Int8) Slice(n int) []int8 {
-	return ((*[1 << 31]int8)(unsafe.Pointer(s)))[0:n:n]
+func (p *Int8) Slice(n int) []int8 {
+	return ((*[1 << 31]int8)(unsafe.Pointer(p)))[0:n:n]
 }
 
 func (p *Int8) Free() {
@@ -243,8 +243,8 @@ func NewUInt8N(n int) *UInt8 {
 	return (*UInt8)(p)
 }
 
-func (s *UInt8) Slice(n int) []uint8 {
-	return ((*[1 << 31]uint8)(unsafe.Pointer(s)))[0:n:n]
+func (p *UInt8) Slice(n int) []uint8 {
+	return ((*[1 << 31]uint8)(unsafe.Pointer(p)))[0:n:n]
 }
 
 func (p *UInt8) Free() {
@@ -270,8 +270,8 @@ func NewInt16N(n int) *Int16 {
 	return (*Int16)(p)
 }
 
-func (s *Int16) Slice(n int) []int16 {
-	return ((*[1 << 30]int16)(unsafe.Pointer(s)))[0:n:n]
+func (p *Int16) Slice(n int) []int16 {
+	return ((*[1 << 30]int16)(unsafe.Pointer(p)))[0:n:n]
 }
 
 func (p *Int16) Free() {
@@ -297,8 +297,8 @@ func NewUInt16N(n int) *UInt16 {
 	return (*UInt16)(p)
 }
 
-func (s *UInt16) Slice(n int) []uint16 {
-	return ((*[1 << 30]uint16)(unsafe.Pointer(s)))[0:n:n]
+func (p *UInt16) Slice(n int) []uint16 {
+	return ((*[1 << 30]uint16)(unsafe.Pointer(p)))[0:n:n]
 }
 
 func (p *UInt16) Free() {
@@ -324,8 +324,8 @@ func NewInt32N(n int) *Int32 {
 	return (*Int32)(p)
 }
 
-func (s *Int32) Slice(n int) []int32 {
-	return ((*[1 << 29]int32)(unsafe.Pointer(s)))[0:n:n]
+func (p *Int32) Slice(n int) []int32 {
+	return ((*[1 << 29]int32)(unsafe.Pointer(p)))[0:n:n]
 }
 
 func (p *Int32) Free() {
@@ -351,8 +351,8 @@ func NewUInt32N(n int) *UInt32 {
 	return (*UInt32)(p)
 }
 
-func (s *UInt32) Slice(n int) []uint32 {
-	return ((*[1 << 29]uint32)(unsafe.Pointer(s)))[0:n:n]
+func (p *UInt32) Slice(n int) []uint32 {
+	return ((*[1 << 29]uint32)(unsafe.Pointer(p)))[0:n:n]
 }
 
 func (p *UInt32) Free() {
@@ -378,8 +378,8 @@ func NewInt64N(n int) *Int64 {
 	return (*Int64)(p)
 }
 
-func (s *Int64) Slice(n int) []int64 {
-	return ((*[1 << 28]int64)(unsafe.Pointer(s)))[0:n:n]
+func (p *Int64) Slice(n int) []int64 {
+	return ((*[1 << 28]int64)(unsafe.Pointer(p)))[0:n:n]
 }
 
 func (p *Int64) Free() {
@@ -405,8 +405,8 @@ func NewUInt64N(n int) *UInt64 {
 	return (*UInt64)(p)
 }
 
-func (s *UInt64) Slice(n int) []uint64 {
-	return ((*[1 << 28]uint64)(unsafe.Pointer(s)))[0:n:n]
+func (p *UInt64) Slice(n int) []uint64 {
+	return ((*[1 << 28]uint64)(unsafe.Pointer(p)))[0:n:n]
 }
 
 func (p *UInt64) Free() {
@@ -432,8 +432,8 @@ func NewIntPtrN(n int) *IntPtr {
 	return (*IntPtr)(p)
 }
 
-func (s *IntPtr) Slice(n int) []IntPtr {
-	return ((*[1 << 28]IntPtr)(unsafe.Pointer(s)))[0:n:n]
+func (p *IntPtr) Slice(n int) []IntPtr {
+	return ((*[1 << 28]IntPtr)(unsafe.Pointer(p)))[0:n:n]
 }
 
 func (p *IntPtr) Free() {
@@ -459,8 +459,8 @@ func NewUIntPtrN(n int) *UIntPtr {
 	return (*UIntPtr)(p)
 }
 
-func (s *UIntPtr) Slice(n int) []UIntPtr {
-	return ((*[1 << 28]UIntPtr)(unsafe.Pointer(s)))[0:n:n]
+func (p *UIntPtr) Slice(n int) []UIntPtr {
+	return ((*[1 << 28]UIntPtr)(unsafe.Pointer(p)))[0:n:n]
 }
 
 func (p *UIntPtr) Free() {
