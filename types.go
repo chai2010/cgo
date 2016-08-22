@@ -10,6 +10,7 @@ import "C"
 import "unsafe"
 
 type (
+	Bool   C.char
 	Char   C.char
 	Int    C.int
 	UInt   C.uint
@@ -31,6 +32,40 @@ type (
 
 	VoidPointer uintptr
 )
+
+// -----------------------------------------------------------------------------
+
+func bool2Byte(b bool) byte {
+	if b {
+		return 1
+	}
+	return 0
+}
+
+func NewBool(firstValue bool, moreValues ...bool) *Bool {
+	n := len(moreValues) + 1
+	p := NewBoolN(n)
+	s := p.Slice(n)
+
+	s[0] = bool2Byte(firstValue)
+	for i, v := range moreValues {
+		s[i+1] = bool2Byte(v)
+	}
+	return p
+}
+
+func NewBoolN(n int) *Bool {
+	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(Char(0))))
+	return (*Bool)(p)
+}
+
+func (s *Bool) Slice(n int) []byte {
+	return ((*[1 << 31]byte)(unsafe.Pointer(s)))[0:n:n]
+}
+
+func (s *Bool) Free() {
+	C.free(unsafe.Pointer(s))
+}
 
 // -----------------------------------------------------------------------------
 
