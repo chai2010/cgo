@@ -18,7 +18,9 @@ import (
 // freed, such as by calling C.free (be sure to include stdlib.h
 // if C.free is needed).
 func NewBytes(s []byte) VoidPointer {
-	return VoidPointer(C.CBytes(s))
+	p := Malloc(len(s))
+	copy(p.ByteSlice(len(s)), s)
+	return p
 }
 
 func Malloc(n int) VoidPointer {
