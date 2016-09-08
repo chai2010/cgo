@@ -59,6 +59,10 @@ func NewBoolN(n int) *Bool {
 	return (*Bool)(p)
 }
 
+func (s *Bool) First() bool {
+	return *s != 0
+}
+
 func (s *Bool) Slice(n int) []byte {
 	return ((*[1 << 31]byte)(unsafe.Pointer(s)))[0:n:n]
 }
@@ -84,6 +88,10 @@ func NewChar(firstValue int, moreValues ...int) *Char {
 func NewCharN(n int) *Char {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(Char(0))))
 	return (*Char)(p)
+}
+
+func (s *Char) First() byte {
+	return byte(*s)
 }
 
 func (s *Char) Slice(n int) []byte {
@@ -116,6 +124,10 @@ func NewIntN(n int) *Int {
 	return (*Int)(p)
 }
 
+func (p *Int) First() int {
+	return int(*p)
+}
+
 func (p *Int) Slice(n int) []Int {
 	return ((*[1 << 29]Int)(unsafe.Pointer(p)))[0:n:n]
 }
@@ -141,6 +153,10 @@ func NewUInt(firstValue uint, moreValues ...uint) *UInt {
 func NewUIntN(n int) *UInt {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(UInt(0))))
 	return (*UInt)(p)
+}
+
+func (p *UInt) First() uint {
+	return uint(*p)
 }
 
 func (p *UInt) Slice(n int) []UInt {
@@ -170,6 +186,10 @@ func NewFloatN(n int) *Float {
 	return (*Float)(p)
 }
 
+func (p *Float) First() float32 {
+	return float32(*p)
+}
+
 func (p *Float) Slice(n int) []float32 {
 	return ((*[1 << 29]float32)(unsafe.Pointer(p)))[0:n:n]
 }
@@ -195,6 +215,10 @@ func NewDouble(firstValue float64, moreValues ...float64) *Double {
 func NewDoubleN(n int) *Double {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(Double(0))))
 	return (*Double)(p)
+}
+
+func (p *Float) First() float64 {
+	return float64(*p)
 }
 
 func (p *Double) Slice(n int) []float64 {
@@ -224,6 +248,10 @@ func NewSizeTN(n int) *SizeT {
 	return (*SizeT)(p)
 }
 
+func (p *SizeT) First() int {
+	return int(*p)
+}
+
 func (p *SizeT) Slice(n int) []SizeT {
 	return ((*[1 << 28]SizeT)(unsafe.Pointer(p)))[0:n:n]
 }
@@ -249,6 +277,10 @@ func NewInt8(firstValue int8, moreValues ...int8) *Int8 {
 func NewInt8N(n int) *Int8 {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(Int8(0))))
 	return (*Int8)(p)
+}
+
+func (p *Int8) First() int8 {
+	return int8(*p)
 }
 
 func (p *Int8) Slice(n int) []int8 {
@@ -278,6 +310,10 @@ func NewUInt8N(n int) *UInt8 {
 	return (*UInt8)(p)
 }
 
+func (p *UInt8) First() uint8 {
+	return uint8(*p)
+}
+
 func (p *UInt8) Slice(n int) []uint8 {
 	return ((*[1 << 31]uint8)(unsafe.Pointer(p)))[0:n:n]
 }
@@ -303,6 +339,10 @@ func NewInt16(firstValue int16, moreValues ...int16) *Int16 {
 func NewInt16N(n int) *Int16 {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(Int16(0))))
 	return (*Int16)(p)
+}
+
+func (p *Int16) First() int16 {
+	return int16(*p)
 }
 
 func (p *Int16) Slice(n int) []int16 {
@@ -332,6 +372,10 @@ func NewUInt16N(n int) *UInt16 {
 	return (*UInt16)(p)
 }
 
+func (p *UInt16) First() uint16 {
+	return uint16(*p)
+}
+
 func (p *UInt16) Slice(n int) []uint16 {
 	return ((*[1 << 30]uint16)(unsafe.Pointer(p)))[0:n:n]
 }
@@ -357,6 +401,10 @@ func NewInt32(firstValue int32, moreValues ...int32) *Int32 {
 func NewInt32N(n int) *Int32 {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(Int32(0))))
 	return (*Int32)(p)
+}
+
+func (p *Int32) First() int32 {
+	return int32(*p)
 }
 
 func (p *Int32) Slice(n int) []int32 {
@@ -386,6 +434,10 @@ func NewUInt32N(n int) *UInt32 {
 	return (*UInt32)(p)
 }
 
+func (p *UInt32) First() uint32 {
+	return uint32(*p)
+}
+
 func (p *UInt32) Slice(n int) []uint32 {
 	return ((*[1 << 29]uint32)(unsafe.Pointer(p)))[0:n:n]
 }
@@ -411,6 +463,10 @@ func NewInt64(firstValue int64, moreValues ...int64) *Int64 {
 func NewInt64N(n int) *Int64 {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(Int64(0))))
 	return (*Int64)(p)
+}
+
+func (p *Int64) First() int64 {
+	return int64(*p)
 }
 
 func (p *Int64) Slice(n int) []int64 {
@@ -440,6 +496,10 @@ func NewUInt64N(n int) *UInt64 {
 	return (*UInt64)(p)
 }
 
+func (p *UInt64) First() uint64 {
+	return uint64(*p)
+}
+
 func (p *UInt64) Slice(n int) []uint64 {
 	return ((*[1 << 28]uint64)(unsafe.Pointer(p)))[0:n:n]
 }
@@ -467,6 +527,10 @@ func NewIntPtrN(n int) *IntPtr {
 	return (*IntPtr)(p)
 }
 
+func (p *IntPtr) First() uintptr {
+	return uintptr(*p)
+}
+
 func (p *IntPtr) Slice(n int) []IntPtr {
 	return ((*[1 << 28]IntPtr)(unsafe.Pointer(p)))[0:n:n]
 }
@@ -492,6 +556,10 @@ func NewUIntPtr(firstValue uintptr, moreValues ...uintptr) *UIntPtr {
 func NewUIntPtrN(n int) *UIntPtr {
 	p := C.calloc(C.size_t(n), C.size_t(unsafe.Sizeof(UIntPtr(0))))
 	return (*UIntPtr)(p)
+}
+
+func (p *UIntPtr) First() uintptr {
+	return uintptr(*p)
 }
 
 func (p *UIntPtr) Slice(n int) []UIntPtr {
