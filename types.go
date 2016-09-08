@@ -217,7 +217,7 @@ func NewDoubleN(n int) *Double {
 	return (*Double)(p)
 }
 
-func (p *Float) First() float64 {
+func (p *Double) First() float64 {
 	return float64(*p)
 }
 
